@@ -126,6 +126,7 @@ void insert_into_quadTree(vector<QuadNode> &quadTree, int idx, Particle &p, int 
 vector<QuadNode> buildQuadTree(vector<Particle> &particles)
 {
     vector<QuadNode> quadTree;
+    quadTree.reserve(particles.size() * 4);
     vector<double> vec = centerQuadTree(particles);
     quadTree.push_back(QuadNode(vec[0], vec[1], vec[2]));
 
@@ -144,7 +145,7 @@ double dist(double xi, double yi, double xj, double yj){
     return sqrt(dx*dx + dy*dy);
 }
 
-void updateForcesRec(double xi, double yi, double mi, vector<Particle> &particles, int i, int idx, vector<QuadNode> &quadTree)
+void updateForcesRec(double xi, double yi, double mi, vector<Particle> &particles, int i, int idx, const vector<QuadNode> &quadTree)
 {
     if (quadTree[idx].total_mass == 0) return;
 
@@ -198,7 +199,7 @@ void updateForcesRec(double xi, double yi, double mi, vector<Particle> &particle
 
 }
 
-void updateForces(vector<Particle> &particles, vector<QuadNode> &quadTree)
+void updateForces(vector<Particle> &particles, const vector<QuadNode> &quadTree)
 {
     int n = particles.size();
     for (int i = 0; i < n; i++)
@@ -380,3 +381,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
+
